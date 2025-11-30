@@ -2,7 +2,7 @@ package database
 
 import (
 	"log"
-	"myfiber/model"
+	"github.com/paung29/model"
 	"time"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
