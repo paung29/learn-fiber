@@ -22,3 +22,7 @@ func NotFoundError(message string) RestError {
 func SystemError(message string) RestError {
 	return RestError{Status: http.StatusInternalServerError, Message: message}
 }
+
+func NewValidationError(message string) RestError {
+	return RestError{Status: http.StatusBadGateway, Message: message}
+}

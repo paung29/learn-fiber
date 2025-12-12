@@ -10,6 +10,7 @@ import (
 
 func CreateUser(form dto.CreateAccountForm) (model.Account, error) {
 
+
 	account := model.Account {
 		Name: form.Name,
 		Email: form.Email,
@@ -28,4 +29,26 @@ func CreateUser(form dto.CreateAccountForm) (model.Account, error) {
 		return model.Account{}, utils.SystemError("failed to create Account")
 	}
 	return account, nil
+}
+
+func Login(form dto.LoginForm) (string, error) {
+	var account model.Account
+
+	if err := database.DB.Where("email = ?", form.Email).First(&account).Error;
+	err != nil {
+		return "", utils.SystemError("invalid email")
+	}
+
+	if err := utils.CheckPassword(account.Password, form.Password);
+	err != nil {
+		return  "", utils.SystemError("invalid password")
+	}
+
+	token, err := utils.GenerateToken(account.ID)
+
+	if err != nil {
+		return  "", utils.SystemError("failed to generate token")
+	}
+
+	return token, nil
 }

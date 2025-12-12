@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"os"
 	"time"
 
@@ -46,6 +47,13 @@ func ParseToken(tokenStr string) (uint, error){
 		return 0, err
 	}
 
+	claims, ok := token.Claims.(*JWTClaims)
+
+	if !ok || !token.Valid {
+		return 0, errors.New("invalid token")
+	}
+
+	return claims.AccountID, nil
 
 }
 

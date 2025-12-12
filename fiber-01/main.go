@@ -5,11 +5,15 @@ import (
 
 	"github.com/paung29/controller/routes"
 	"github.com/paung29/database"
+	"github.com/paung29/utils"
 
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
+
+	utils.InitValidator()
+
 	app := fiber.New()
 
 	database.ConnectDatabase()
